@@ -25,6 +25,35 @@
 * **Reactor**: 主循环负责事件分发，将 IO 事件与业务逻辑解耦，实现高效调度。
 
 ## 📊 性能测试 (Benchmark)
+## 🛠️ 快速开始 (Quick Start)
+
+### 1. 编译项目
+```bash
+# 需要安装 cmake 和 g++
+cmake .
+make
+2. 启动服务器
+Bash
+
+./kv_store
+# Server started on port 8080...
+3. 运行测试
+你可以使用 nc (Netcat) 或自带的 benchmark 工具进行测试。
+
+使用 Netcat:
+
+Bash
+
+nc 127.0.0.1 8080
+SET name tesla
+OK
+GET name
+tesla
+使用压测工具:
+
+Bash
+
+./benchmark
 
 ### 测试环境
 * **系统**: Ubuntu 20.04 LTS (WSL2 on Windows)
