@@ -1,0 +1,4 @@
+/home/zhang/projects/tcp_server/CMakeFiles/rebuild_cache.dir
+/home/zhang/projects/tcp_server/CMakeFiles/edit_cache.dir
+/home/zhang/projects/tcp_server/CMakeFiles/benchmark.dir
+/home/zhang/projects/tcp_server/CMakeFiles/kv_store.dir
