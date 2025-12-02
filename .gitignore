@@ -1,0 +1,21 @@
+# 1. 忽略数据库文件 (私密数据)
+*.db
+data.db
+
+# 2. 忽略编译生成的可执行程序 (这是“菜”，不是“菜谱”)
+kv_store
+benchmark
+
+# 3. 忽略 CMake 产生的编译垃圾 (这一大堆都是废料)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# 4. 忽略 VS Code 的个人配置 (别人的编辑器设置可能和你不一样)
+.vscode/
+
+# 5. 忽略 macOS/Linux 系统垃圾
+.DS_Store
+
+history/
