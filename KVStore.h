@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>  // 文件流库 (file stream)
 #include <iostream>
-#include <mutex>    // 锁 (哪怕单线程，这也是好习惯)
+#include <mutex> 
 
 using namespace std;
 
@@ -40,7 +40,7 @@ private:
     map<string,string> data_;
     string filename_;
     mutex mtx_;
-    // LoadFromFile 函数
+
     void LoadFromFile()
     {
         lock_guard<mutex> lock(mtx_);

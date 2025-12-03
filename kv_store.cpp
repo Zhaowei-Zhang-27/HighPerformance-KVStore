@@ -9,13 +9,12 @@
 #include <netinet/in.h> // sockaddr_in
 #include <arpa/inet.h>  // htons
 #include <netinet/tcp.h>
-// 自定义头文件
 #include "Epoller.h"
 #include "Connection.h"
 #include "KVStore.h"
 
 using namespace std;
-
+//服务端
 #define PORT 8080
 #define MAX_EVENTS 1000
 bool stop_server = false;
@@ -78,14 +77,13 @@ int main() {
     // 4. 事件循环 (Event Loop)
     // =====================================================================
     while (!stop_server) {
-        // -1 表示永久阻塞，直到有事件发生
         // nfds: 返回有多少个 socket 有事发生了
-        int nfds = epoller.Wait(500);
+        int nfds = epoller.Wait(500);//五百毫秒去检查一次僵尸连接
 
         // 遍历所有有事的 Socket
         for (int i = 0; i < nfds; ++i) {
             
-            // 情况 A: 如果是 server_fd 有事，说明【有新连接】来了！
+            // 情况 A: 如果是 server_fd 有事，说明有新的客户
             if (epoller.GetEventFd(i) == server_fd) {
                 struct sockaddr_in client_addr;
                 socklen_t client_len = sizeof(client_addr);
@@ -105,7 +103,7 @@ int main() {
                     fdmap[client_sock] = conn;
                 }
             }
-            // 情况 B: 如果是其他 fd 有事，说明【客户端发数据】来了！
+            // 情况 B: 如果是其他 fd 有事，说明有数据
             else if (epoller.GetEvents(i) & EPOLLIN) {
                 int sockfd = epoller.GetEventFd(i);
                 Connection *cur = fdmap[sockfd];
@@ -120,9 +118,9 @@ int main() {
                     // valread < 0 表示出错
                     //cout << "Client " << sockfd << " disconnected." << endl;
                     
-                    // 1. 从 Epoll 群里踢出去
+                    //从 Epoll 群里踢出去
                     epoller.DelFd(sockfd);
-                    // 2. 关闭 Socket
+                    //关闭 Socket
                     delete fdmap[sockfd];
                     fdmap.erase(sockfd);
                 }
@@ -136,13 +134,13 @@ int main() {
             if (now - conn->GetLastActiveTime() > TIMEOUT) {
                 //cout << "[Timeout] Kicking client: " <<  conn->GetFd() << endl;
                 
-                // 1. 踢出 Epoll (不再监控)
+                //踢出 Epoll (不再监控)
                 epoller.DelFd(conn->GetFd());
                 
-                // 2. 销毁对象 (析构函数会自动 close socket)
+                //销毁对象 (析构函数会自动 close socket)
                 delete conn;
                 
-                // 3. 【关键】从 map 移除，并让迭代器指向下一个
+                //从 map 移除，并让迭代器指向下一个
                 // erase 会返回下一个有效的迭代器，这样就不会崩
                 it = fdmap.erase(it); 
             } else {
