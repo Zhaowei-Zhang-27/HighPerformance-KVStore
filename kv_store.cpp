@@ -28,8 +28,6 @@ KVStore g_store("data.db");
 map<int, Connection*> fdmap; 
 const int TIMEOUT = 10; 
 
- // 需要这个头文件
-
 void set_nodelay(int sock) {
     int opt = 1;
     // 禁用 Nagle 算法，有数据立刻发，不等待
