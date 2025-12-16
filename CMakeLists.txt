@@ -1,25 +1,18 @@
-cmake_minimum_required(VERSION 3.10)
-project(KVStoreEngine)
+cmake_minimum_required(VERSION 3.0)
+project(TinyRedis)
 
-# 设置 C++ 标准
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# 设置编译选项，开启c++11，-g是用来调试的
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3 -Wall")
 
-# 查找系统里的线程库 (因为 benchmark.cpp 用到了多线程)
-find_package(Threads REQUIRED)
+# 头文件路径
+include_directories(.)
 
-# ==========================================
-# 目标 1: 你的服务器 (kv_store)
-# ==========================================
-# 只需要编译 kv_store.cpp (头文件它会自动找)
+# 生成服务器可执行文件
 add_executable(kv_store kv_store.cpp)
 
-# ==========================================
-# 目标 2: 你的压测工具 (benchmark)
-# ==========================================
-# 只需要编译 benchmark.cpp
+# 生成压测工具
+# add_executable(test test.cpp) # 之前的测试文件，先注释掉
 add_executable(benchmark benchmark.cpp)
 
-# 【关键】给 benchmark 加上线程库链接 (-pthread)
-# 否则编译 benchmark 时会报错 "undefined reference to pthread_create"
-target_link_libraries(benchmark Threads::Threads)
+# benchmark用到了多线程，必须链接pthread库，不然报错
+target_link_libraries(benchmark pthread)
