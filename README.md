@@ -5,7 +5,7 @@
 ![Build](https://img.shields.io/badge/build-CMake-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
-v1.1 - 支持 Redis 协议与跳表数据结构。
+版本号：v1.1 - 支持 Redis 协议与跳表数据结构。
 ## 📖 项目简介 (Introduction)
 这是一个基于 **C++11** 实现的高性能、单线程、非阻塞网络服务器。
 核心架构采用 **Reactor 事件驱动模型**，基于 Linux **Epoll LT (水平触发)** 机制实现。
