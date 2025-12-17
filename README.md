@@ -4,7 +4,7 @@
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20WSL2-lightgrey)
 ![Build](https://img.shields.io/badge/build-CMake-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
-
+v1.0 epoll-kv_store
 ## 📖 项目简介 (Introduction)
 这是一个基于 **C++11** 实现的高性能、单线程、非阻塞网络服务器。
 核心架构采用 **Reactor 事件驱动模型**，基于 Linux **Epoll LT (水平触发)** 机制实现。
@@ -68,3 +68,4 @@ Bash
 总耗时: 2.842 秒
 
 ⚡ QPS: 35,186.5 (次/秒)
+
